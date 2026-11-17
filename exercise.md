@@ -58,7 +58,7 @@ The existing tests illustrate the contract, but they are not exhaustive. Preserv
 1. **Investigate.** Find duplicated calculations, conditional logic, and responsibilities that could be separated. Explain why each is a problem, not merely where it appears.
 2. **Protect behavior.** Add tests before changing production code. Cover at least:
    - standard shipping immediately below and at the free-shipping threshold *after discounts*;
-   - VIP discount rounding down and tax rounding at a half-cent;
+   - VIP discount rounding down and tax rounding on either side of a half-cent;
    - a coupon on an order worth less than 500 cents;
    - invalid inputs and caller-owned data remaining unchanged.
 3. **Refactor.** Use at least three techniques, such as **Extract Function**, **Replace Magic Number with Named Constant**, **Consolidate Duplicate Conditional Fragments**, or **Replace Conditional with Polymorphism** where justified. Avoid adding abstractions that make this small application harder to understand.
@@ -87,4 +87,5 @@ For each criterion, award full points when all evidence is present, roughly half
 - Before learners edit production code, verify that their new characterization tests pass on the starting application. This establishes that the tests describe existing behavior rather than intended changes.
 - Accept multiple reasonable designs. A solution does not need classes or polymorphism to earn full credit.
 - Ask learners to explain why shipping uses the discounted amount and why the tax calculation uses integer arithmetic.
+- An exact half-cent tax cannot occur at 8% on an integer number of cents; use amounts producing 0.48 and 0.56 cents of tax to check rounding on either side.
 - Keep the starting files available separately if you need to reset the exercise for another group.

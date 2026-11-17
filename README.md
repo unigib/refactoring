@@ -42,3 +42,14 @@ Read [`exercise.md`](exercise.md) for the full instructions. Run the tests from 
 ```powershell
 python -m unittest -v
 ```
+
+### Possible solution and notes
+
+After attempting the exercise, compare your work with [`checkout_solution.py`](checkout_solution.py). [`test_checkout_reference.py`](test_checkout_reference.py) checks both the original and the solution, including shipping thresholds, discount limits, rounding, validation, and non-mutation.
+
+- **Issue:** Each fulfillment function repeats the same subtotal, discount, tax, and result calculations. **Change:** Consolidate those calculations in `calculate_order` and extract validation, discount, and shipping helpers.
+- **Issue:** Unnamed prices, thresholds, and percentages make the rules harder to find. **Change:** Give them descriptive constants.
+- **Trade-off:** Shipping still uses a simple conditional; separate classes would add complexity for only three methods. Integer arithmetic preserves the original rounding and avoids floating-point money calculations.
+- **Rounding note:** At 8% on whole-cent amounts, tax cannot be exactly half a cent. The reference tests use 6 cents (0.48 cents tax) and 7 cents (0.56 cents tax) to check rounding on either side.
+
+Run just the reference tests with `python -m unittest -v test_checkout_reference`.
