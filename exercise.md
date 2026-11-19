@@ -1,13 +1,14 @@
-# Refactoring a bloated checkout application
+# Refactoring the University of Gibraltar campus shop
 
 ## Overview
 
-**Audience:** learners who can write Python functions, use dictionaries and lists, and run tests  
+**Scenario:** the University of Gibraltar campus shop takes orders for student supplies. The small checkout program works, but its code is repetitive and difficult to change safely.
+**Audience:** students who can write Python functions, use dictionaries and lists, and run tests
 **Duration:** 90 minutes, with a 60-minute minimum core exercise  
 **Format:** pairs or individuals  
 **Materials:** Python 3 and the files in this folder; no external packages are required
 
-The checkout application in `checkout.py` calculates totals for three fulfillment methods. It works, but its calculation logic is repeated and mixes several responsibilities. Your job is to improve the design **without changing observable behavior**.
+The campus shop application in `checkout.py` calculates order totals for three fulfillment methods. Imagine a student ordering supplies for collection or delivery. The calculation logic is repeated and mixes several responsibilities. Your job is to improve the design **without changing observable behavior**.
 
 ## Learning objectives
 
@@ -17,6 +18,22 @@ By the end, you should be able to:
 - Identify duplication, long methods, and mixed responsibilities.
 - Apply named refactoring techniques in small, testable steps.
 - Explain design decisions and demonstrate that behavior was preserved.
+
+## Refactoring techniques: a quick guide
+
+Refactoring means improving the internal structure of code while keeping what it does the same. These are some common techniques you can look for in this exercise:
+
+| Technique | In plain language | Example in this exercise |
+|---|---|---|
+| **Rename Variable** | Give a variable or function a name that tells readers what it represents. | Replace a vague name such as `x` with `subtotal_cents`. |
+| **Extract Function** | Move a clear, focused piece of work into a function with a descriptive name. | Put order validation or shipping calculation in its own helper. |
+| **Extract Constant** (also called **Replace Magic Number with Named Constant**) | Give a meaningful name to a number or string that represents a rule. | Name the 500-cent standard shipping fee or the 10,000-cent free-shipping threshold. |
+| **Consolidate Duplicate Code** | Keep one copy of repeated logic and have the different cases use it. | Calculate subtotal, discounts, tax, and the result once instead of repeating them for each fulfillment method. |
+| **Consolidate Duplicate Conditional Fragments** | Move identical steps out of different branches so they are performed once. | Keep shared order calculations out of the standard, express, and pickup-specific paths. |
+| **Decompose Conditional** | Replace a complicated condition with a clearly named function or simpler pieces. | Give the free-shipping threshold check a name that explains the rule. |
+| **Replace Conditional with Polymorphism** | Let different types implement the same operation instead of choosing behavior with a long conditional. | Different fulfillment classes could calculate shipping, but that may be more structure than this small program needs. |
+
+These are options, not a checklist. Choose techniques that make this program clearer; do not add classes or helpers just to use a named technique. After each small change, run the tests to check that student orders still produce the same results.
 
 ## Setup
 
@@ -84,8 +101,8 @@ For each criterion, award full points when all evidence is present, roughly half
 ## Instructor notes
 
 - The first 60 minutes form the minimum complete exercise; allow 90 minutes for review and discussion.
-- Before learners edit production code, verify that their new characterization tests pass on the starting application. This establishes that the tests describe existing behavior rather than intended changes.
+- Before students edit production code, verify that their new characterization tests pass on the starting application. This establishes that the tests describe existing behavior rather than intended changes.
 - Accept multiple reasonable designs. A solution does not need classes or polymorphism to earn full credit.
-- Ask learners to explain why shipping uses the discounted amount and why the tax calculation uses integer arithmetic.
+- Ask students to explain why shipping uses the discounted amount and why the tax calculation uses integer arithmetic.
 - An exact half-cent tax cannot occur at 8% on an integer number of cents; use amounts producing 0.48 and 0.56 cents of tax to check rounding on either side.
 - Keep the starting files available separately if you need to reset the exercise for another group.
